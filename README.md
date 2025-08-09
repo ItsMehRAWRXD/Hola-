@@ -1,6 +1,6 @@
-# RegexMaster - Full-Featured Regex Tool
+# Full-Featured Regex Tool
 
-A comprehensive regex utility for pattern matching, text processing, and program generation. RegexMaster provides a powerful command-line interface and Python API for advanced regex operations.
+A comprehensive regex utility for pattern matching, text processing, and program generation. This tool provides a powerful command-line interface and Python API for advanced regex operations.
 
 ## Features
 
@@ -197,7 +197,7 @@ python3 regex_tool.py -p "ERROR.*" -d /var/log --generate-code > error_report.py
 
 ## Python API
 
-You can also use RegexMaster as a Python library:
+You can also use this tool as a Python library:
 
 ```python
 from regex_tool import RegexTool, RegexPatterns, RegexFormatter
@@ -335,7 +335,7 @@ python3 regex_tool.py -p "problematic_pattern" -f file.txt --verbose
 
 ## Contributing
 
-RegexMaster is designed to be extensible. You can:
+This tool is designed to be extensible. You can:
 
 1. **Add New Predefined Patterns**: Edit the `RegexPatterns` class
 2. **Create Custom Formatters**: Extend the `RegexFormatter` class

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Examples and Test Cases for RegexMaster
+Examples and Test Cases for the Regex Tool
 Demonstrates various use cases and capabilities of the regex tool.
 """
 
@@ -381,7 +381,7 @@ def example_advanced_features():
 
 def run_all_examples():
     """Run all examples."""
-    print("RegexMaster - Comprehensive Examples")
+    print("Regex Tool - Comprehensive Examples")
     print("=" * 60)
     
     examples = [
