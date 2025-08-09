@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Full-Featured Regex Tool (RegexMaster)
+Full-Featured Regex Tool
 A comprehensive regex utility for pattern matching, text processing, and program generation.
 """
 
