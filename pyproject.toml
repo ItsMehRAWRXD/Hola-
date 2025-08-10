@@ -1,0 +1,8 @@
+[project]
+name = "mypkg"
+version = "0.1.0"
+description = "Minimal C++ extension POC via setuptools.build_meta"
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Your Name" }]
