@@ -64,6 +64,72 @@ When the script starts, it will display configuration instructions:
 5. Add custom model (e.g., `wizard-uncensored:13b` or `uncensored-coder`)
 6. Disable all cloud models
 
+## 🔗 "Open in Cursor" Offline Support
+
+The standard "Open in Cursor" button requires internet connectivity. For offline use, we provide alternatives:
+
+### Method 1: Direct Opening Script
+
+Use `Open-In-Cursor-Offline.ps1` to open files/projects in Cursor:
+
+```powershell
+# Open current directory
+.\Open-In-Cursor-Offline.ps1
+
+# Open specific directory
+.\Open-In-Cursor-Offline.ps1 -Path "C:\MyProject"
+
+# Open specific file
+.\Open-In-Cursor-Offline.ps1 -Path "C:\MyProject" -File "main.py"
+
+# Open file at specific line
+.\Open-In-Cursor-Offline.ps1 -Path "C:\MyProject" -File "main.py" -Line 42
+
+# Also start Ollama
+.\Open-In-Cursor-Offline.ps1 -Path "C:\MyProject" -StartOllama
+```
+
+### Method 2: Register Offline Protocol Handler
+
+Enable `cursor://` URLs to work offline:
+
+```powershell
+# Run as Administrator
+.\Register-CursorProtocol.ps1
+
+# Now these URLs work offline:
+# cursor://open?path=C:\MyProject
+# cursor://open?path=C:\MyProject&file=main.py&line=42
+```
+
+To unregister:
+```powershell
+.\Register-CursorProtocol.ps1 -Unregister
+```
+
+### Method 3: Windows Context Menu (Right-Click)
+
+Add "Open with Cursor (Offline)" to context menu:
+
+```powershell
+# Run as Administrator
+# Create registry entries for context menu
+$menuName = "Open with Cursor (Offline)"
+$command = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$((Get-Location).Path)\Open-In-Cursor-Offline.ps1`" -Path `"%V`" -StartOllama"
+
+# For folders
+New-Item -Path "HKCR:\Directory\shell\CursorOffline" -Force
+Set-ItemProperty -Path "HKCR:\Directory\shell\CursorOffline" -Name "(Default)" -Value $menuName
+New-Item -Path "HKCR:\Directory\shell\CursorOffline\command" -Force
+Set-ItemProperty -Path "HKCR:\Directory\shell\CursorOffline\command" -Name "(Default)" -Value $command
+
+# For files
+New-Item -Path "HKCR:\*\shell\CursorOffline" -Force
+Set-ItemProperty -Path "HKCR:\*\shell\CursorOffline" -Name "(Default)" -Value $menuName
+New-Item -Path "HKCR:\*\shell\CursorOffline\command" -Force
+Set-ItemProperty -Path "HKCR:\*\shell\CursorOffline\command" -Name "(Default)" -Value $command
+```
+
 ## 📁 Script Descriptions
 
 ### `Start-CursorOffline.ps1`
@@ -99,6 +165,27 @@ Tests uncensored models with PoC examples:
 - `-TestType`: Security, Adult, Medical, GameHack, All, or Custom
 - `-Model`: Model to test with
 - `-SaveResults`: Save outputs to files
+
+### `Open-In-Cursor-Offline.ps1`
+Opens files/projects in Cursor without internet:
+- Finds and launches Cursor
+- Optionally starts Ollama
+- Supports file and line number navigation
+
+**Parameters:**
+- `-Path`: Directory to open
+- `-File`: Specific file to open
+- `-Line`: Line number to jump to
+- `-StartOllama`: Also start Ollama server
+
+### `Register-CursorProtocol.ps1`
+Registers offline handler for cursor:// URLs:
+- Requires Administrator privileges
+- Enables cursor:// URLs to work offline
+- Includes unregister option
+
+**Parameters:**
+- `-Unregister`: Remove the protocol handler
 
 ## 🔒 Security Modes
 
@@ -158,6 +245,11 @@ ollama list
 # Check model storage
 Get-ChildItem "$env:USERPROFILE\.ollama\models" -Recurse
 ```
+
+### "Open in Cursor" Not Working Offline
+- Use the provided offline scripts instead
+- Register the offline protocol handler
+- Add context menu entries for right-click access
 
 ## 💾 Offline Model Transfer
 
